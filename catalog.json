@@ -1,0 +1,427 @@
+{
+  "schema": 3,
+  "id": "cleanme-junk",
+  "version": "2026.11.25.2",
+  "apps": [
+    { "id": "claude-desktop", "name": "Claude Desktop", "package": "Claude_pzs8sxrjxfjjc" },
+    { "id": "chatgpt", "name": "ChatGPT", "package": "OpenAI.Codex_2p2nqsd0c76g0" },
+    { "id": "lm-studio", "name": "LM Studio", "exe": "AppData\\Local\\Programs\\LM Studio\\LM Studio.exe" },
+    { "id": "ollama", "name": "Ollama", "exe": "AppData\\Local\\Programs\\Ollama\\ollama app.exe" }
+  ],
+  "rules": [
+    {
+      "id": "windows.temp.user",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "A",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Temp\\**" ],
+      "minAgeHours": 24,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Your temporary files", "status": "Files apps and installers left in your Temp folder more than a day ago.", "consequence": "Nothing you need is lost; apps recreate temporary files. Files still in use are skipped." },
+        "vi": { "title": "File tạm của người dùng", "status": "File do ứng dụng và trình cài đặt để lại trong thư mục Temp từ hơn một ngày trước.", "consequence": "Không mất dữ liệu cần dùng; ứng dụng sẽ tạo lại file tạm khi cần. File đang được dùng sẽ được bỏ qua." }
+      }
+    },
+    {
+      "id": "windows.temp.system",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "A",
+      "target": "Files",
+      "paths": [ "Windows\\Temp\\**" ],
+      "minAgeHours": 24,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Windows temporary files", "status": "Files Windows and services left in Windows\\Temp more than a day ago.", "consequence": "Windows recreates what it needs. Files still in use are skipped." },
+        "vi": { "title": "File tạm của Windows", "status": "File do Windows và các dịch vụ để lại trong Windows\\Temp từ hơn một ngày trước.", "consequence": "Windows sẽ tự tạo lại khi cần. File đang được dùng sẽ được bỏ qua." }
+      }
+    },
+    {
+      "id": "windows.thumbnail-cache",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "A",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Microsoft\\Windows\\Explorer\\thumbcache_*.db", "Users\\*\\AppData\\Local\\Microsoft\\Windows\\Explorer\\iconcache_*.db" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Thumbnail and icon cache", "status": "Pictures File Explorer keeps to show thumbnails and icons quickly.", "consequence": "Explorer rebuilds them; folders with many pictures may open a little slower the first time." },
+        "vi": { "title": "Bộ nhớ đệm ảnh thu nhỏ và biểu tượng", "status": "Ảnh File Explorer lưu sẵn để hiện ảnh thu nhỏ và biểu tượng nhanh hơn.", "consequence": "Explorer sẽ tạo lại; thư mục nhiều ảnh có thể mở chậm hơn một chút ở lần đầu." }
+      }
+    },
+    {
+      "id": "windows.directx-shader-cache",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "A",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\D3DSCache\\**" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "DirectX shader cache", "status": "Graphics shaders compiled earlier by games and apps.", "consequence": "They are compiled again when needed; some games may load slower the first time." },
+        "vi": { "title": "Bộ nhớ đệm shader DirectX", "status": "Shader đồ hoạ do game và ứng dụng đã biên dịch trước đó.", "consequence": "Sẽ được biên dịch lại khi cần; một số game có thể tải chậm hơn ở lần đầu." }
+      }
+    },
+    {
+      "id": "windows.update-download",
+      "tier": "Free",
+      "owner": "Windows Update",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Windows\\SoftwareDistribution\\Download\\**" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Windows Update downloads", "status": "Update files Windows downloaded to install.", "consequence": "If an update is still waiting to install, Windows downloads it again. Clean only when no update is pending." },
+        "vi": { "title": "File tải về của Windows Update", "status": "File cập nhật Windows đã tải về để cài.", "consequence": "Nếu còn bản cập nhật chờ cài, Windows sẽ tải lại. Chỉ nên dọn khi không có cập nhật đang chờ." }
+      }
+    },
+    {
+      "id": "windows.delivery-optimization",
+      "tier": "Free",
+      "owner": "Windows Update",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Windows\\ServiceProfiles\\NetworkService\\AppData\\Local\\Microsoft\\Windows\\DeliveryOptimization\\Cache\\**" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Delivery Optimization cache", "status": "Update pieces Windows keeps to share with other PCs.", "consequence": "Windows stops sharing them and downloads again if needed. Needs administrator rights to read." },
+        "vi": { "title": "Bộ nhớ đệm Delivery Optimization", "status": "Các phần cập nhật Windows giữ lại để chia sẻ với máy khác.", "consequence": "Windows ngừng chia sẻ các phần này và tải lại khi cần. Cần quyền quản trị để đọc." }
+      }
+    },
+    {
+      "id": "windows.error-reports",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\**", "ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\**", "ProgramData\\Microsoft\\Windows\\WER\\Temp\\**", "Users\\*\\AppData\\Local\\Microsoft\\Windows\\WER\\**" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Error reports", "status": "Reports Windows kept after apps or Windows crashed.", "consequence": "You lose the details support may ask for when diagnosing a problem." },
+        "vi": { "title": "Báo cáo lỗi", "status": "Báo cáo Windows lưu lại sau khi ứng dụng hoặc Windows bị lỗi.", "consequence": "Mất các chi tiết bộ phận hỗ trợ có thể cần khi chẩn đoán sự cố." }
+      }
+    },
+    {
+      "id": "windows.crash-dumps",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\CrashDumps\\**", "Windows\\MEMORY.DMP", "Windows\\Minidump\\*.dmp" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Crash dumps", "status": "Memory snapshots saved when an app or Windows crashed.", "consequence": "You lose the data needed to investigate those crashes." },
+        "vi": { "title": "Bản kết xuất khi lỗi (crash dump)", "status": "Bản chụp bộ nhớ được lưu khi ứng dụng hoặc Windows bị lỗi.", "consequence": "Mất dữ liệu cần để điều tra các lần lỗi đó." }
+      }
+    },
+    {
+      "id": "windows.setup-logs",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Windows\\Logs\\CBS\\*.log", "Windows\\Logs\\CBS\\*.cab", "Windows\\Logs\\DISM\\*.log" ],
+      "minAgeHours": 168,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Old servicing logs", "status": "Logs of Windows updates and repairs older than a week.", "consequence": "You lose history used to troubleshoot update problems." },
+        "vi": { "title": "Nhật ký cập nhật cũ", "status": "Nhật ký cập nhật và sửa chữa Windows cũ hơn một tuần.", "consequence": "Mất lịch sử dùng để khắc phục sự cố cập nhật." }
+      }
+    },
+    {
+      "id": "windows.internet-cache",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Microsoft\\Windows\\INetCache\\**" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Temporary internet files", "status": "Web content cached by Windows components and older apps.", "consequence": "Content is downloaded again when needed; some apps may be slower the first time." },
+        "vi": { "title": "File Internet tạm", "status": "Nội dung web được các thành phần Windows và ứng dụng cũ lưu tạm.", "consequence": "Nội dung sẽ được tải lại khi cần; một số ứng dụng có thể chậm hơn ở lần đầu." }
+      }
+    },
+    {
+      "id": "browser.edge.cache",
+      "tier": "Free",
+      "owner": "Microsoft Edge",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Cache\\**", "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Code Cache\\**", "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\GPUCache\\**" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [ "msedge.exe" ],
+      "text": {
+        "en": { "title": "Microsoft Edge cache", "status": "Web pages, scripts and graphics Edge saved to load sites faster.", "consequence": "Sites load slower until the cache refills. Sign-ins, history and passwords are not touched. Close Edge first." },
+        "vi": { "title": "Bộ nhớ đệm Microsoft Edge", "status": "Trang web, script và đồ hoạ Edge lưu lại để mở trang nhanh hơn.", "consequence": "Trang web mở chậm hơn cho tới khi bộ nhớ đệm đầy lại. Không động tới đăng nhập, lịch sử, mật khẩu. Cần đóng Edge trước." }
+      }
+    },
+    {
+      "id": "browser.chrome.cache",
+      "tier": "Free",
+      "owner": "Google Chrome",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Cache\\**", "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Code Cache\\**", "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\GPUCache\\**" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [ "chrome.exe" ],
+      "text": {
+        "en": { "title": "Google Chrome cache", "status": "Web pages, scripts and graphics Chrome saved to load sites faster.", "consequence": "Sites load slower until the cache refills. Sign-ins, history and passwords are not touched. Close Chrome first." },
+        "vi": { "title": "Bộ nhớ đệm Google Chrome", "status": "Trang web, script và đồ hoạ Chrome lưu lại để mở trang nhanh hơn.", "consequence": "Trang web mở chậm hơn cho tới khi bộ nhớ đệm đầy lại. Không động tới đăng nhập, lịch sử, mật khẩu. Cần đóng Chrome trước." }
+      }
+    },
+    {
+      "id": "browser.firefox.cache",
+      "tier": "Free",
+      "owner": "Mozilla Firefox",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Mozilla\\Firefox\\Profiles\\*\\cache2\\**" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [ "firefox.exe" ],
+      "text": {
+        "en": { "title": "Mozilla Firefox cache", "status": "Web content Firefox saved to load sites faster.", "consequence": "Sites load slower until the cache refills. Sign-ins, history and passwords are not touched. Close Firefox first." },
+        "vi": { "title": "Bộ nhớ đệm Mozilla Firefox", "status": "Nội dung web Firefox lưu lại để mở trang nhanh hơn.", "consequence": "Trang web mở chậm hơn cho tới khi bộ nhớ đệm đầy lại. Không động tới đăng nhập, lịch sử, mật khẩu. Cần đóng Firefox trước." }
+      }
+    },
+    {
+      "id": "windows.recycle-bin",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "$Recycle.Bin\\S-*\\$R*", "$Recycle.Bin\\S-*\\$I*", "$Recycle.Bin\\S-*\\$R*\\**" ],
+      "minAgeHours": 0,
+      "action": "OwnerTool",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Recycle Bin", "status": "Files you deleted that can still be restored.", "consequence": "They can no longer be restored. Check the Recycle Bin for anything you still want first." },
+        "vi": { "title": "Thùng rác", "status": "File bạn đã xoá nhưng vẫn còn khôi phục được.", "consequence": "Sẽ không thể khôi phục nữa. Hãy xem Thùng rác trước xem còn gì cần giữ." }
+      }
+    },
+    {
+      "id": "windows.previous-installation",
+      "tier": "Free",
+      "owner": "Windows",
+      "risk": "D",
+      "target": "Folder",
+      "paths": [ "Windows.old" ],
+      "minAgeHours": 0,
+      "action": "OwnerTool",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Previous Windows installation", "status": "The earlier Windows kept after an upgrade so you can go back.", "consequence": "You can no longer go back to the earlier Windows. Remove it with Settings > System > Storage > Temporary files, not by deleting the folder." },
+        "vi": { "title": "Bản Windows cũ", "status": "Bản Windows trước được giữ lại sau khi nâng cấp để có thể quay về.", "consequence": "Không thể quay về bản Windows trước. Hãy gỡ bằng Settings > System > Storage > Temporary files, không xoá thư mục trực tiếp." }
+      }
+    },
+    {
+      "id": "ai.claude-desktop.cache",
+      "tier": "Paid",
+      "owner": "Claude Desktop",
+      "app": "claude-desktop",
+      "verified": { "from": "6.0", "below": "7.0", "status": "Verified" },
+      "risk": "B",
+      "target": "Files",
+      "paths": [
+        "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\Cache\\**",
+        "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\Code Cache\\**",
+        "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\GPUCache\\**",
+        "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\GrShaderCache\\**",
+        "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\ShaderCache\\**",
+        "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\DawnWebGPUCache\\**",
+        "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\DawnGraphiteCache\\**",
+        "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\GPUPersistentCache\\**"
+      ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [ "claude.exe" ],
+      "text": {
+        "en": { "title": "Claude Desktop interface cache", "status": "Pages, scripts and graphics the Claude Desktop window keeps to open faster. Sign-in, chats and Cowork data are elsewhere and are not touched.", "consequence": "Claude rebuilds the cache: tested on Claude Desktop 6.x, sign-in, chat history and Cowork stayed intact. The space comes back only for a while; the cache grows again within minutes of use. Close Claude first." },
+        "vi": { "title": "Bộ nhớ đệm giao diện của Claude Desktop", "status": "Trang, script và đồ hoạ mà cửa sổ Claude Desktop lưu lại để mở nhanh hơn. Đăng nhập, lịch sử chat và dữ liệu Cowork nằm ở chỗ khác, không bị đụng tới.", "consequence": "Claude sẽ tạo lại bộ nhớ đệm: đã thử với Claude Desktop 6.x, đăng nhập, lịch sử chat và Cowork vẫn còn nguyên. Dung lượng chỉ được trả lại tạm thời; bộ nhớ đệm lớn lại sau vài phút dùng. Hãy đóng Claude trước." }
+      }
+    },
+    {
+      "id": "ai.claude-desktop.logs",
+      "tier": "Paid",
+      "owner": "Claude Desktop",
+      "app": "claude-desktop",
+      "verified": { "from": "6.0", "below": "7.0", "status": "Trial" },
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Claude\\Logs\\**" ],
+      "minAgeHours": 168,
+      "action": "Delete",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Old Claude Desktop logs", "status": "Log files Claude Desktop wrote more than a week ago.", "consequence": "You lose the history support may ask for when diagnosing a problem with Claude. Logs being written are skipped." },
+        "vi": { "title": "Log cũ của Claude Desktop", "status": "File nhật ký Claude Desktop ghi từ hơn một tuần trước.", "consequence": "Mất phần lịch sử mà bộ phận hỗ trợ có thể cần khi tìm lỗi của Claude. Log đang được ghi sẽ được bỏ qua." }
+      }
+    },
+    {
+      "id": "ai.lm-studio.updater-installer",
+      "tier": "Paid",
+      "owner": "LM Studio",
+      "app": "lm-studio",
+      "verified": { "from": "0.4", "below": "0.5", "status": "Trial" },
+      "risk": "B",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\lm-studio-updater\\installer.exe" ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [ "lm studio.exe" ],
+      "text": {
+        "en": { "title": "LM Studio installer kept by the updater", "status": "The full LM Studio installer (about 600 MB) the updater keeps after installing.", "consequence": "LM Studio keeps working; the updater downloads a new installer when an update comes. Close LM Studio first." },
+        "vi": { "title": "Bộ cài LM Studio do trình cập nhật giữ lại", "status": "Bộ cài đầy đủ của LM Studio (khoảng 600 MB) mà trình cập nhật giữ lại sau khi cài.", "consequence": "LM Studio vẫn chạy bình thường; khi có bản cập nhật, trình cập nhật sẽ tải bộ cài mới. Hãy đóng LM Studio trước." }
+      }
+    },
+    {
+      "id": "ai.lm-studio.cache",
+      "tier": "Paid",
+      "owner": "LM Studio",
+      "app": "lm-studio",
+      "verified": { "from": "0.4", "below": "0.5", "status": "Trial" },
+      "risk": "B",
+      "target": "Files",
+      "paths": [
+        "Users\\*\\AppData\\Roaming\\LM Studio\\GPUCache\\**",
+        "Users\\*\\AppData\\Roaming\\LM Studio\\Code Cache\\**",
+        "Users\\*\\AppData\\Roaming\\LM Studio\\Dawn*\\**",
+        "Users\\*\\AppData\\Roaming\\LM Studio\\Crashpad\\reports\\**"
+      ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [ "lm studio.exe" ],
+      "text": {
+        "en": { "title": "LM Studio interface cache and crash reports", "status": "Graphics and script caches of the LM Studio window, and reports kept after it crashed.", "consequence": "LM Studio rebuilds the caches; models, chats and settings are not touched. You lose the crash details support may ask for. Close LM Studio first." },
+        "vi": { "title": "Bộ nhớ đệm giao diện và báo cáo lỗi của LM Studio", "status": "Bộ nhớ đệm đồ hoạ và script của cửa sổ LM Studio, cùng báo cáo lỗi lưu lại sau khi app bị dừng đột ngột.", "consequence": "LM Studio sẽ tạo lại bộ nhớ đệm; mô hình, lịch sử chat và cài đặt không bị đụng tới. Mất chi tiết lỗi mà bộ phận hỗ trợ có thể cần. Hãy đóng LM Studio trước." }
+      }
+    },
+    {
+      "id": "ai.ollama.webview-cache",
+      "tier": "Paid",
+      "owner": "Ollama",
+      "app": "ollama",
+      "verified": { "from": "0.40", "below": "0.41", "status": "Trial" },
+      "risk": "B",
+      "target": "Files",
+      "paths": [
+        "Users\\*\\AppData\\Roaming\\ollama app.exe\\EBWebView\\Default\\Cache\\**",
+        "Users\\*\\AppData\\Roaming\\ollama app.exe\\EBWebView\\Default\\Code Cache\\**",
+        "Users\\*\\AppData\\Roaming\\ollama app.exe\\EBWebView\\Default\\GPUCache\\**"
+      ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [ "ollama app.exe" ],
+      "text": {
+        "en": { "title": "Ollama window cache", "status": "Pages and scripts the Ollama window keeps to open faster.", "consequence": "Ollama rebuilds the cache; models and sign-in are not touched. Close the Ollama app first." },
+        "vi": { "title": "Bộ nhớ đệm cửa sổ Ollama", "status": "Trang và script mà cửa sổ Ollama lưu lại để mở nhanh hơn.", "consequence": "Ollama sẽ tạo lại bộ nhớ đệm; mô hình và đăng nhập không bị đụng tới. Hãy đóng ứng dụng Ollama trước." }
+      }
+    },
+    {
+      "id": "ai.chatgpt.cache",
+      "tier": "Paid",
+      "owner": "ChatGPT",
+      "app": "chatgpt",
+      "verified": { "from": "26.0", "below": "27.0", "status": "Trial" },
+      "risk": "B",
+      "target": "Files",
+      "paths": [
+        "Users\\*\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Roaming\\Codex\\Cache\\**",
+        "Users\\*\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Roaming\\Codex\\Code Cache\\**",
+        "Users\\*\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Roaming\\Codex\\GPUCache\\**",
+        "Users\\*\\AppData\\Local\\Packages\\OpenAI.Codex_2p2nqsd0c76g0\\LocalCache\\Roaming\\Codex\\Dawn*\\**"
+      ],
+      "minAgeHours": 0,
+      "action": "Delete",
+      "closedApps": [ "chatgpt.exe", "codex.exe" ],
+      "text": {
+        "en": { "title": "ChatGPT interface cache", "status": "Pages, scripts and graphics the ChatGPT window keeps to open faster.", "consequence": "ChatGPT rebuilds the cache; sign-in and chats are not touched. Close ChatGPT first." },
+        "vi": { "title": "Bộ nhớ đệm giao diện của ChatGPT", "status": "Trang, script và đồ hoạ mà cửa sổ ChatGPT lưu lại để mở nhanh hơn.", "consequence": "ChatGPT sẽ tạo lại bộ nhớ đệm; đăng nhập và lịch sử chat không bị đụng tới. Hãy đóng ChatGPT trước." }
+      }
+    },
+    {
+      "id": "ai.ollama.models",
+      "tier": "Paid",
+      "owner": "Ollama",
+      "app": "ollama",
+      "risk": "C",
+      "target": "Files",
+      "paths": [ "Users\\*\\.ollama\\models\\**" ],
+      "minAgeHours": 0,
+      "action": "Report",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Ollama models", "status": "AI models you downloaded with Ollama. Each model is one large file plus a few small ones that belong together.", "consequence": "These are your models, not junk. Removing files by hand breaks a model; CleanMe never deletes them.", "remove": "To remove a model you no longer use: open a terminal, run \"ollama list\" to see your models, then \"ollama rm <name>\"." },
+        "vi": { "title": "Mô hình của Ollama", "status": "Các mô hình AI bạn đã tải bằng Ollama. Mỗi mô hình gồm một file lớn và vài file nhỏ đi cùng nhau.", "consequence": "Đây là mô hình của bạn, không phải rác. Xoá lẻ từng file sẽ làm hỏng mô hình; CleanMe không bao giờ xoá chúng.", "remove": "Để gỡ mô hình không còn dùng: mở cửa sổ dòng lệnh, chạy \"ollama list\" để xem danh sách, rồi \"ollama rm <tên>\"." }
+      }
+    },
+    {
+      "id": "ai.lm-studio.models",
+      "tier": "Paid",
+      "owner": "LM Studio",
+      "app": "lm-studio",
+      "risk": "C",
+      "target": "Files",
+      "paths": [ "Users\\*\\.lmstudio\\models\\**" ],
+      "minAgeHours": 0,
+      "action": "Report",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "LM Studio models", "status": "AI models you downloaded with LM Studio.", "consequence": "These are your models, not junk; CleanMe never deletes them.", "remove": "To remove a model you no longer use: open LM Studio, go to My Models, and delete it there." },
+        "vi": { "title": "Mô hình của LM Studio", "status": "Các mô hình AI bạn đã tải bằng LM Studio.", "consequence": "Đây là mô hình của bạn, không phải rác; CleanMe không bao giờ xoá chúng.", "remove": "Để gỡ mô hình không còn dùng: mở LM Studio, vào My Models và xoá ở đó." }
+      }
+    },
+    {
+      "id": "ai.claude-desktop.vm",
+      "tier": "Paid",
+      "owner": "Claude Desktop",
+      "app": "claude-desktop",
+      "risk": "C",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Claude-Data\\claude_*\\vm_bundles\\**" ],
+      "minAgeHours": 0,
+      "action": "Report",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Claude Desktop virtual machine", "status": "The Linux virtual machine Claude Desktop runs for agent mode (Cowork): its disk, its session data and the downloaded copy it was unpacked from.", "consequence": "Deleting it loses the virtual machine's state and work in progress; CleanMe never deletes it.", "remove": "If you do not use Cowork or agent mode, turn it off in Claude Desktop's settings; Claude manages this folder itself." },
+        "vi": { "title": "Máy ảo của Claude Desktop", "status": "Máy ảo Linux mà Claude Desktop chạy cho chế độ agent (Cowork): ổ đĩa, dữ liệu phiên và bản tải về đã giải nén ra nó.", "consequence": "Xoá sẽ mất trạng thái máy ảo và công việc đang làm dở; CleanMe không bao giờ xoá nó.", "remove": "Nếu không dùng Cowork hay chế độ agent, hãy tắt tính năng này trong cài đặt của Claude Desktop; Claude tự quản lý thư mục này." }
+      }
+    },
+    {
+      "id": "ai.ollama.gpu-runtime",
+      "tier": "Paid",
+      "owner": "Ollama",
+      "app": "ollama",
+      "risk": "D",
+      "target": "Files",
+      "paths": [ "Users\\*\\AppData\\Local\\Programs\\Ollama\\lib\\ollama\\**" ],
+      "minAgeHours": 0,
+      "action": "Report",
+      "closedApps": [],
+      "text": {
+        "en": { "title": "Ollama model runtimes", "status": "Libraries Ollama installs to run models on the processor and on graphics cards (about 3 GB), including ones for graphics cards this PC may not have.", "consequence": "Part of the Ollama installation, not junk; removing files by hand breaks Ollama. CleanMe never deletes them.", "remove": "They go away only when you uninstall Ollama in Settings > Apps." },
+        "vi": { "title": "Bộ chạy mô hình của Ollama", "status": "Thư viện Ollama cài để chạy mô hình trên bộ xử lý và trên card đồ hoạ (khoảng 3 GB), kể cả loại cho card đồ hoạ mà máy này có thể không có.", "consequence": "Thuộc bản cài của Ollama, không phải rác; xoá lẻ sẽ làm hỏng Ollama. CleanMe không bao giờ xoá chúng.", "remove": "Chúng chỉ mất đi khi bạn gỡ Ollama trong Settings > Apps." }
+      }
+    }
+  ]
+}
